@@ -1,9 +1,9 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from repo.base_service import BaseService
-from repo.models import Settings, SettingsDict, Report, RoleDict
+from repo.models import Settings, SettingsDict, Report, RoleDict, FunctionDict
 from repo.base.schemas import (
-    SettingsResponse, SettingsDictResponse, ReportResponse, RoleDictResponse
+    SettingsResponse, SettingsDictResponse, ReportResponse, RoleDictResponse, FunctionDictResponse
 )
 
 
@@ -96,6 +96,30 @@ class RoleService(BaseService):
     async def update(cls, session: AsyncSession, id: int, **values) -> RoleDictResponse:
         new_instance = await super().update(session=session, id=id, **values)
         return RoleDictResponse.model_validate(new_instance)
+
+    @classmethod
+    async def delete(cls, session: AsyncSession, id: int) -> str:
+        instance = await super().delete(session=session, id=id)
+        return instance
+
+
+class FunctionDictService(BaseService):
+    model = FunctionDict
+
+    @classmethod
+    async def get(cls, session: AsyncSession, id: int) -> FunctionDictResponse:
+        instance = await super().get(session=session, id=id)
+        return FunctionDictResponse.model_validate(instance)
+
+    @classmethod
+    async def create(cls, session: AsyncSession, **values) -> FunctionDictResponse:
+        new_instance = await super().create(session=session, **values)
+        return FunctionDictResponse.model_validate(new_instance)
+
+    @classmethod
+    async def update(cls, session: AsyncSession, id: int, **values) -> FunctionDictResponse:
+        new_instance = await super().update(session=session, id=id, **values)
+        return FunctionDictResponse.model_validate(new_instance)
 
     @classmethod
     async def delete(cls, session: AsyncSession, id: int) -> str:

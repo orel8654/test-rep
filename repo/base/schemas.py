@@ -178,6 +178,12 @@ class FunctionDictCreate(BaseModel):
     version: int = Field(..., description="Версия функции")
 
 
+class FunctionDictUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    code: Optional[str] = Field(..., description="Код функции", max_length=30)
+    version: Optional[int] = Field(..., description="Версия функции")
+
+
 class FunctionDictResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID функции")
