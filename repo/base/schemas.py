@@ -24,6 +24,12 @@ class RoleDictCreate(BaseModel):
     name: str = Field(..., description="Название роли", max_length=60)
 
 
+class RoleDictUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    code: Optional[str] = Field(..., description="Код роли", max_length=30)
+    name: Optional[str] = Field(..., description="Название роли", max_length=60)
+
+
 class RoleDictResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID записи")

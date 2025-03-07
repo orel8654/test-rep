@@ -1,9 +1,9 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from repo.base_service import BaseService
-from repo.models import Settings, SettingsDict, Report
+from repo.models import Settings, SettingsDict, Report, RoleDict
 from repo.base.schemas import (
-    SettingsResponse, SettingsDictResponse, ReportResponse
+    SettingsResponse, SettingsDictResponse, ReportResponse, RoleDictResponse
 )
 
 
@@ -72,6 +72,30 @@ class ReportService(BaseService):
     async def update(cls, session: AsyncSession, id: int, **values) -> ReportResponse:
         new_instance = await super().update(session=session, id=id, **values)
         return ReportResponse.model_validate(new_instance)
+
+    @classmethod
+    async def delete(cls, session: AsyncSession, id: int) -> str:
+        instance = await super().delete(session=session, id=id)
+        return instance
+
+
+class RoleService(BaseService):
+    model = RoleDict
+
+    @classmethod
+    async def get(cls, session: AsyncSession, id: int) -> RoleDictResponse:
+        instance = await super().get(session=session, id=id)
+        return RoleDictResponse.model_validate(instance)
+
+    @classmethod
+    async def create(cls, session: AsyncSession, **values) -> RoleDictResponse:
+        new_instance = await super().create(session=session, **values)
+        return RoleDictResponse.model_validate(new_instance)
+
+    @classmethod
+    async def update(cls, session: AsyncSession, id: int, **values) -> RoleDictResponse:
+        new_instance = await super().update(session=session, id=id, **values)
+        return RoleDictResponse.model_validate(new_instance)
 
     @classmethod
     async def delete(cls, session: AsyncSession, id: int) -> str:
