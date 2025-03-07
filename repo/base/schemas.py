@@ -108,6 +108,14 @@ class SettingsCreate(BaseModel):
     active_to: Optional[date] = Field(None, description="Дата окончания действия")
 
 
+class SettingUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    setting_code_id: Optional[int] = Field(None, description="ID кода настройки")
+    value: Optional[str] = Field(None, description="Значение настройки", max_length=255)
+    active_from: Optional[date] = Field(None, description="Дата начала действия")
+    active_to: Optional[date] = Field(None, description="Дата окончания действия")
+
+
 class SettingsResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID настройки")
@@ -121,6 +129,12 @@ class SettingsDictCreate(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     code: str = Field(..., description="Код настройки", max_length=30)
     name: str = Field(..., description="Название настройки", max_length=255)
+
+
+class SettingsDictUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    code: Optional[str] = Field(None, description="Код настройки", max_length=30)
+    name: Optional[str] = Field(None, description="Название настройки", max_length=255)
 
 
 class SettingsDictResponse(BaseModel):

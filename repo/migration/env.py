@@ -13,10 +13,10 @@ from os.path import dirname, abspath
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 from repo.database import DATABASE_URL, Base
-from repo.users.models import User, UserGroup, UserRole, UserProperty, UserSending, UserReportLink
-from repo.companies.models import Company, CompanyProperty, License, Department, ModuleCompanyLink
-from repo.base.models import (PropertyCodeDict, RoleDict, RoleFunction, FunctionDict, Settings, SettingsDict,
-                              TimezoneDict, StatusDict, Module, Report, ShablonDict)
+from repo.models import (User, UserGroup, UserRole, UserProperty, UserSending, UserReportLink,
+                         Company, CompanyProperty, License, Department, ModuleCompanyLink,
+                         PropertyCodeDict, RoleDict, RoleFunction, FunctionDict, Settings, SettingsDict,
+                         TimezoneDict, StatusDict, Module, Report, ShablonDict)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

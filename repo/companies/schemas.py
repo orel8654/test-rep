@@ -33,6 +33,14 @@ class LicenseCreate(BaseModel):
     active_to: date = Field(..., description="Дата окончания действия")
 
 
+class LicenseUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    company_id : int = Field(..., description="ID компании")
+    license_key: Optional[str] = Field(None, description="Лицензионный ключ", max_length=1000)
+    active_from: Optional[date] = Field(None, description="Дата начала действия")
+    active_to: Optional[date] = Field(None, description="Дата окончания действия")
+
+
 class LicenseResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID лицензии")
