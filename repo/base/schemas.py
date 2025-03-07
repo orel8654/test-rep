@@ -92,6 +92,13 @@ class ReportCreate(BaseModel):
     version: int = Field(..., description="Версия отчета")
 
 
+class ReportUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    code: Optional[str] = Field(..., description="Код отчета", max_length=30)
+    name: Optional[str] = Field(..., description="Название отчета")
+    version: Optional[int] = Field(..., description="Версия отчета")
+
+
 class ReportResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID отчета")
@@ -108,7 +115,7 @@ class SettingsCreate(BaseModel):
     active_to: Optional[date] = Field(None, description="Дата окончания действия")
 
 
-class SettingUpdate(BaseModel):
+class SettingsUpdate(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     setting_code_id: Optional[int] = Field(None, description="ID кода настройки")
     value: Optional[str] = Field(None, description="Значение настройки", max_length=255)
