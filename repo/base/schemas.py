@@ -197,6 +197,12 @@ class RoleFunctionCreate(BaseModel):
     function_code_id: int = Field(..., description="ID кода функции")
 
 
+class RoleFunctionUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    role_id: int = Field(..., description="ID роли")
+    function_code_id: int = Field(..., description="ID кода функции")
+
+
 class RoleFunctionResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID записи")
