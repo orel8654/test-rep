@@ -1,5 +1,5 @@
 from sqlalchemy.orm import relationship, Mapped, mapped_column, declared_attr
-from sqlalchemy import ForeignKey, String
+from sqlalchemy import ForeignKey, String, func
 from repo.database import Base
 from typing import Optional, List
 from datetime import date
@@ -8,7 +8,7 @@ from datetime import date
 class Company(Base):
     property_id: Mapped[int] = mapped_column(ForeignKey("property_code_dict.id"), nullable=False)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
-    created_date: Mapped[date] = mapped_column(nullable=False)
+    created_date: Mapped[date] = mapped_column(nullable=False, server_default=func.now())
     inn: Mapped[str] = mapped_column(String(16), unique=True, nullable=False)
     kpp: Mapped[str] = mapped_column(String(9), unique=True, nullable=False)
     ogrn: Mapped[Optional[str]] = mapped_column(String(13), nullable=True)
@@ -55,7 +55,7 @@ class Department(Base):
     company_id: Mapped[int] = mapped_column(ForeignKey("companies.id"), nullable=False)
     code: Mapped[int] = mapped_column(nullable=False)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
-    created_date: Mapped[date] = mapped_column(nullable=False)
+    created_date: Mapped[date] = mapped_column(nullable=False, server_default=func.now())
 
     company: Mapped["Company"] = relationship("Company", back_populates="departments")
 

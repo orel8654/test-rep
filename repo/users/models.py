@@ -1,5 +1,5 @@
 from sqlalchemy.orm import relationship, Mapped, mapped_column, declared_attr
-from sqlalchemy import ForeignKey, text, String
+from sqlalchemy import ForeignKey, text, String, func
 from typing import Optional, List
 from repo.database import Base
 from datetime import date
@@ -13,7 +13,7 @@ class User(Base):
     firstname: Mapped[str] = mapped_column(String(60), nullable=False)
     lastname: Mapped[str] = mapped_column(String(60), nullable=False)
     patronymic: Mapped[Optional[str]] = mapped_column(String(60), nullable=True)
-    created_date: Mapped[date] = mapped_column(nullable=False)
+    created_date: Mapped[date] = mapped_column(nullable=False, server_default=func.now())
     user_lock: Mapped[bool] = mapped_column(default=False, server_default=text("false"))
     password: Mapped[str] = mapped_column(String(255), nullable=False)
     comment: Mapped[Optional[str]] = mapped_column(String(1000), nullable=True)
@@ -69,7 +69,7 @@ class UserProperty(Base):
 class UserSending(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     status_id: Mapped[int] = mapped_column(ForeignKey("status_dict.id"), nullable=False)
-    created_date: Mapped[date] = mapped_column(nullable=False)
+    created_date: Mapped[date] = mapped_column(nullable=False, server_default=func.now())
     message: Mapped[str] = mapped_column(String(4000), nullable=False)
 
     user: Mapped["User"] = relationship("User", back_populates="sendings")
@@ -83,7 +83,7 @@ class UserSending(Base):
 class UserReportLink(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     report_id: Mapped[int] = mapped_column(ForeignKey("reports.id"), nullable=False)
-    created_date: Mapped[date] = mapped_column(nullable=False)
+    created_date: Mapped[date] = mapped_column(nullable=False, server_default=func.now())
     active_from: Mapped[date] = mapped_column(nullable=False)
     active_to: Mapped[Optional[date]] = mapped_column(nullable=True)
 
