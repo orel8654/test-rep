@@ -1,8 +1,32 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from repo.base_service import BaseService
-from repo.models import Company, License
-from repo.companies.schemas import CompanyCreate, LicenseCreate, LicenseUpdate, LicenseResponse
+from repo.models import Company, License, Department
+from repo.companies.schemas import CompanyCreate, LicenseCreate, LicenseUpdate, LicenseResponse, DepartmentResponse
+
+
+class DepartmentService(BaseService):
+    model = Department
+
+    @classmethod
+    async def get(cls, session: AsyncSession, id: int) -> DepartmentResponse:
+        instance = await super().get(session=session, id=id)
+        return DepartmentResponse.model_validate(instance)
+
+    @classmethod
+    async def create(cls, session: AsyncSession, **values) -> DepartmentResponse:
+        new_instance = await super().create(session=session, **values)
+        return DepartmentResponse.model_validate(new_instance)
+
+    @classmethod
+    async def update(cls, session: AsyncSession, id: int, **values) -> DepartmentResponse:
+        new_instance = await super().update(session=session, id=id, **values)
+        return DepartmentResponse.model_validate(new_instance)
+
+    @classmethod
+    async def delete(cls, session: AsyncSession, id: int) -> str:
+        instance = await super().delete(session=session, id=id)
+        return instance
 
 
 class CompanyService(BaseService):

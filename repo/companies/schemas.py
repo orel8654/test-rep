@@ -55,7 +55,13 @@ class DepartmentCreate(BaseModel):
     company_id: int = Field(..., description="ID компании")
     code: int = Field(..., description="Код подразделения")
     name: str = Field(..., description="Название подразделения", max_length=255)
-    created_date: date = Field(..., description="Дата создания")
+
+
+class DepartmentUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    company_id: int = Field(..., description="ID компании")
+    code: Optional[int] = Field(..., description="Код подразделения")
+    name: Optional[str] = Field(..., description="Название подразделения", max_length=255)
 
 
 class DepartmentResponse(BaseModel):
