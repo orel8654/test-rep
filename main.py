@@ -9,6 +9,10 @@ from apps.departments.router import router as department_router
 from apps.modules.router import router as module_router
 from apps.status_dict.router import router as status_dict_router
 from apps.property_code_dict.router import router as property_code_dict_router
+from apps.timezone_dict.router import router as timezone_dict_router
+from apps.companies.router import router as company_router
+from apps.license.router import router as license_router
+from apps.company_properties.router import router as company_property_router
 
 app = FastAPI()
 
@@ -26,3 +30,7 @@ app.include_router(department_router)
 app.include_router(module_router)
 app.include_router(status_dict_router)
 app.include_router(property_code_dict_router)
+app.include_router(timezone_dict_router)
+app.include_router(company_router)
+app.include_router(license_router)
+app.include_router(company_property_router)

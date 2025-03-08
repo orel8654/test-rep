@@ -13,6 +13,16 @@ class CompanyCreate(BaseModel):
     bic: str | None = Field(None, description="БИК компании", max_length=9)
 
 
+class CompanyUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    property_id: Optional[int] = Field(..., description="ID свойства компании")
+    name: Optional[str] = Field(..., description="Название компании", max_length=255)
+    inn: Optional[str] = Field(..., description="ИНН компании", min_length=10, max_length=16)
+    kpp: Optional[str] = Field(..., description="КПП компании", min_length=9, max_length=9)
+    ogrn: Optional[str] | None = Field(None, description="ОГРН компании", max_length=13)
+    bic: Optional[str] | None = Field(None, description="БИК компании", max_length=9)
+
+
 class CompanyResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID компании")

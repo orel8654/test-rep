@@ -50,6 +50,12 @@ class TimezoneDictCreate(BaseModel):
     timezone: Optional[str] = Field(None, description="Временная зона")
 
 
+class TimezoneDictUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    timezone_name: Optional[str] = Field(None, description="Название временной зоны", max_length=255)
+    timezone: Optional[str] = Field(None, description="Временная зона")
+
+
 class TimezoneDictResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID временной зоны")
@@ -177,6 +183,13 @@ class SettingsDictResponse(BaseModel):
 
 
 class CompanyPropertyCreate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    company_id: int = Field(..., description="ID компании")
+    property_code_id: int = Field(..., description="ID кода свойства")
+    value: Optional[str] = Field(None, description="Значение свойства", max_length=255)
+
+
+class CompanyPropertyUpdate(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     company_id: int = Field(..., description="ID компании")
     property_code_id: int = Field(..., description="ID кода свойства")

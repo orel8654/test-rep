@@ -98,7 +98,7 @@ class UserReportLink(Base):
 class Company(Base):
     property_id: Mapped[int] = mapped_column(ForeignKey("property_code_dict.id"), nullable=False)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
-    created_date: Mapped[date] = mapped_column(nullable=False, server_default=func.now())
+    created_date: Mapped[date] = mapped_column(nullable=False, default=date.today)
     inn: Mapped[str] = mapped_column(String(16), unique=True, nullable=False)
     kpp: Mapped[str] = mapped_column(String(9), unique=True, nullable=False)
     ogrn: Mapped[Optional[str]] = mapped_column(String(13), nullable=True)
