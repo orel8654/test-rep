@@ -38,6 +38,13 @@ class UserGroupCreate(BaseModel):
     comment: Optional[str] = Field(None, description="Комментарий", max_length=1000)
 
 
+class UserGroupUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    company_id: int = Field(..., description="ID компании")
+    group_name: str = Field(..., description="Название группы", max_length=255)
+    comment: Optional[str] = Field(None, description="Комментарий", max_length=1000)
+
+
 class UserGroupResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID группы")
