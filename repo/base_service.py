@@ -51,4 +51,3 @@ class BaseService:
         except SQLAlchemyError as e:
             await session.rollback()
             raise e
-        return {"message": f"{cls.model.__name__} deleted successfully"}

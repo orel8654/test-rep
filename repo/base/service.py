@@ -1,5 +1,5 @@
 from repo.base_service import BaseService
-from repo.models import Settings, SettingsDict, Report, RoleDict, FunctionDict, RoleFunction
+from repo.models import Settings, SettingsDict, Report, RoleDict, FunctionDict, RoleFunction, Module, StatusDict
 
 
 class SettingsService(BaseService):
@@ -24,3 +24,11 @@ class FunctionDictService(BaseService):
 
 class RoleFunctionsService(BaseService):
     model = RoleFunction
+
+
+class ModuleService(BaseService):
+    model = Module
+
+
+class StatusDictService(BaseService):
+    model = StatusDict

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from repo.database import get_async_session
 
@@ -52,8 +52,8 @@ async def delete_settings_dict(id: int, session: AsyncSession = Depends(get_asyn
         Delete a settings dict
     """
     try:
-        deleted_settings_dict = await SettingsDictService.delete(id=id, session=session)
-        return SettingsDictResponse.model_validate(deleted_settings_dict)
+        await SettingsDictService.delete(id=id, session=session)
+        return Response(status_code=204)
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error))
     except Exception as error:

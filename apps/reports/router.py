@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from repo. database import get_async_session
 
@@ -52,8 +52,8 @@ async def delete_report(id: int, session: AsyncSession = Depends(get_async_sessi
         Delete report
     """
     try:
-        instane = await ReportService.delete(session=session, id=id)
-        return ReportResponse.model_validate(instane)
+        await ReportService.delete(session=session, id=id)
+        return Response(status_code=204)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:

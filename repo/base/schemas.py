@@ -56,6 +56,12 @@ class StatusDictCreate(BaseModel):
     name: str = Field(..., description="Название статуса", max_length=60)
 
 
+class StatusDictUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    code: Optional[str] = Field(..., description="Код статуса", max_length=16)
+    name: Optional[str] = Field(..., description="Название статуса", max_length=60)
+
+
 class StatusDictResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID статуса")
@@ -82,6 +88,12 @@ class ModuleCreate(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     code: str = Field(..., description="Код модуля", max_length=30)
     name: str = Field(..., description="Название модуля", max_length=60)
+
+
+class ModuleUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    code: Optional[str] = Field(..., description="Код модуля", max_length=30)
+    name: Optional[str] = Field(..., description="Название модуля", max_length=60)
 
 
 class ModuleResponse(BaseModel):
