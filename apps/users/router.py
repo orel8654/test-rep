@@ -5,6 +5,8 @@ from repo.database import get_async_session
 from repo.users.service import UserService
 from repo.users.schemas import UserCreate, UserUpdate, UserResponse
 
+from apps.auth.service import PasswordService
+
 router = APIRouter(prefix='/users', tags=['Work with users'])
 
 @router.get('/{id}', response_model=UserResponse)
@@ -26,7 +28,9 @@ async def create_user(payload: UserCreate, session: AsyncSession = Depends(get_a
         Create user
     """
     try:
-        new_settings = await UserService.create(session=session, **payload.model_dump())
+        user_data = payload.model_dump()
+        user_data['password'] = PasswordService.get_password_hash(user_data['password'])
+        new_settings = await UserService.create(session=session, **user_data)
         return UserResponse.model_validate(new_settings)
     except Exception as error:
         raise HTTPException(status_code=500, detail=str(error))

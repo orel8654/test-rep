@@ -145,7 +145,7 @@ class Department(Base):
     company_id: Mapped[int] = mapped_column(ForeignKey("companies.id"), nullable=False)
     code: Mapped[int] = mapped_column(nullable=False)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
-    created_date: Mapped[date] = mapped_column(nullable=False, server_default=func.now())
+    created_date: Mapped[date] = mapped_column(nullable=False, default=date.today)
 
     company: Mapped["Company"] = relationship("Company", back_populates="departments")
 
