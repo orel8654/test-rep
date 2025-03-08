@@ -14,7 +14,7 @@ async def get_report(id: int, session: AsyncSession = Depends(get_async_session)
     """
     try:
         instance = await ReportService.get(session=session, id=id)
-        return instance
+        return ReportResponse.model_validate(instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -27,7 +27,7 @@ async def create_report(payload: ReportCreate, session: AsyncSession = Depends(g
     """
     try:
         new_instance = await ReportService.create(session=session, **payload.model_dump())
-        return new_instance
+        return ReportResponse.model_validate(new_instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -40,7 +40,7 @@ async def update_report(id: int, payload: ReportUpdate, session: AsyncSession = 
     """
     try:
         new_instance = await ReportService.update(session=session, id=id, **payload.model_dump())
-        return new_instance
+        return ReportResponse.model_validate(new_instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -53,7 +53,7 @@ async def delete_report(id: int, session: AsyncSession = Depends(get_async_sessi
     """
     try:
         instane = await ReportService.delete(session=session, id=id)
-        return instane
+        return ReportResponse.model_validate(instane)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:

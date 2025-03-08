@@ -15,7 +15,7 @@ async def get_functions_dict(id: int, session: AsyncSession = Depends(get_async_
     """
     try:
         instance = await FunctionDictService.get(session=session, id=id)
-        return instance
+        return FunctionDictResponse.model_validate(instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -28,7 +28,7 @@ async def create_functions_dict(payload: FunctionDictCreate, session: AsyncSessi
     """
     try:
         new_instance = await FunctionDictService.create(session=session, **payload.model_dump())
-        return new_instance
+        return FunctionDictResponse.model_validate(new_instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -41,7 +41,7 @@ async def update_functions_dict(id: int, payload: FunctionDictUpdate, session: A
     """
     try:
         new_instance = await FunctionDictService.update(session=session, id=id, **payload.model_dump())
-        return new_instance
+        return FunctionDictResponse.model_validate(new_instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -54,7 +54,7 @@ async def delete_functions_dict(id: int, session: AsyncSession = Depends(get_asy
     """
     try:
         instane = await FunctionDictService.delete(session=session, id=id)
-        return instane
+        return FunctionDictResponse.model_validate(instane)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:

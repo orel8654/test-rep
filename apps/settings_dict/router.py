@@ -16,7 +16,7 @@ async def get_settings_dict(id: int, session: AsyncSession = Depends(get_async_s
     """
     try:
         settings_dict = await SettingsDictService.get(id=id, session=session)
-        return settings_dict
+        return SettingsDictResponse.model_validate(settings_dict)
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error))
     except Exception as error:
@@ -29,7 +29,7 @@ async def create_settings_dict(payload: SettingsDictCreate, session: AsyncSessio
     """
     try:
         new_settings_dict = await SettingsDictService.create(session=session, **payload.model_dump())
-        return new_settings_dict
+        return SettingsDictResponse.model_validate(new_settings_dict)
     except Exception as error:
         raise HTTPException(status_code=400, detail=str(error))
 
@@ -40,7 +40,7 @@ async def update_settings_dict(id: int, payload: SettingsDictUpdate, session: As
     """
     try:
         new_settings_dict = await SettingsDictService.update(id=id, session=session, **payload.model_dump())
-        return new_settings_dict
+        return SettingsDictResponse.model_validate(new_settings_dict)
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error))
     except Exception as error:
@@ -53,7 +53,7 @@ async def delete_settings_dict(id: int, session: AsyncSession = Depends(get_asyn
     """
     try:
         deleted_settings_dict = await SettingsDictService.delete(id=id, session=session)
-        return deleted_settings_dict
+        return SettingsDictResponse.model_validate(deleted_settings_dict)
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error))
     except Exception as error:

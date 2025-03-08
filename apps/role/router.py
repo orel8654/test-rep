@@ -17,7 +17,7 @@ async def get_role_dict(id: int, session: AsyncSession = Depends(get_async_sessi
     """
     try:
         instance = await RoleService.get(session=session, id=id)
-        return instance
+        return RoleDictResponse.model_validate(instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -30,7 +30,7 @@ async def create_role_dict(payload: RoleDictCreate, session: AsyncSession = Depe
     """
     try:
         new_instance = await RoleService.create(session=session, **payload.model_dump())
-        return new_instance
+        return RoleDictResponse.model_validate(new_instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -43,7 +43,7 @@ async def update_role_dict(id: int, payload: RoleDictUpdate, session: AsyncSessi
     """
     try:
         new_instance = await RoleService.update(session=session, id=id, **payload.model_dump())
-        return new_instance
+        return RoleDictResponse.model_validate(new_instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -56,7 +56,7 @@ async def delete_role_dict(id: int, session: AsyncSession = Depends(get_async_se
     """
     try:
         instane = await RoleService.delete(session=session, id=id)
-        return instane
+        return RoleDictResponse.model_validate(instane)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -69,7 +69,7 @@ async def get_role_function(id: int, session: AsyncSession = Depends(get_async_s
     """
     try:
         instance = await RoleFunctionsService.get(session=session, id=id)
-        return instance
+        return RoleFunctionResponse.model_validate(instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -82,7 +82,7 @@ async def create_role_function(payload: RoleFunctionCreate, session: AsyncSessio
     """
     try:
         new_instance = await RoleFunctionsService.create(session=session, **payload.model_dump())
-        return new_instance
+        return RoleFunctionResponse.model_validate(new_instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -95,7 +95,7 @@ async def update_role_function(id: int, payload: RoleFunctionUpdate, session: As
     """
     try:
         new_instance = await RoleFunctionsService.update(session=session, id=id, **payload.model_dump())
-        return new_instance
+        return RoleFunctionResponse.model_validate(new_instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -108,7 +108,7 @@ async def delete_role_function(id: int, session: AsyncSession = Depends(get_asyn
     """
     try:
         instane = await RoleFunctionsService.delete(session=session, id=id)
-        return instane
+        return RoleFunctionResponse.model_validate(instane)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:

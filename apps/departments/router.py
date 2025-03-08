@@ -16,7 +16,7 @@ async def get_department(id: int, session: AsyncSession = Depends(get_async_sess
     """
     try:
         instance = await DepartmentService.get(session=session, id=id)
-        return instance
+        return DepartmentResponse.model_validate(instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -29,7 +29,7 @@ async def create_department(payload: DepartmentCreate, session: AsyncSession = D
     """
     try:
         new_instance = await DepartmentService.create(session=session, **payload.model_dump())
-        return new_instance
+        return DepartmentResponse.model_validate(new_instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -42,7 +42,7 @@ async def update_department(id: int, payload: DepartmentUpdate, session: AsyncSe
     """
     try:
         new_instance = await DepartmentService.update(session=session, id=id, **payload.model_dump())
-        return new_instance
+        return DepartmentResponse.model_validate(new_instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -55,7 +55,7 @@ async def delete_department(id: int, session: AsyncSession = Depends(get_async_s
     """
     try:
         instane = await DepartmentService.delete(session=session, id=id)
-        return instane
+        return DepartmentResponse.model_validate(instane)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:

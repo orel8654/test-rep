@@ -14,7 +14,7 @@ async def get_settings(id: int, session: AsyncSession = Depends(get_async_sessio
     """
     try:
         instance = await SettingsService.get(session=session, id=id)
-        return instance
+        return SettingsResponse.model_validate(instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -27,7 +27,7 @@ async def create_settings(payload: SettingsCreate, session: AsyncSession = Depen
     """
     try:
         new_settings = await SettingsService.create(session=session, **payload.model_dump())
-        return new_settings
+        return SettingsResponse.model_validate(new_settings)
     except Exception as error:
         raise HTTPException(status_code=500, detail=str(error))
 
@@ -39,7 +39,7 @@ async def update_settings(id: int, payload: SettingsUpdate, session: AsyncSessio
     """
     try:
         new_instance = await SettingsService.update(session=session, id=id, **payload.model_dump())
-        return new_instance
+        return SettingsResponse.model_validate(new_instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
@@ -52,7 +52,7 @@ async def delete_settings(id: int, session: AsyncSession = Depends(get_async_ses
     """
     try:
         instance = await SettingsService.delete(session=session, id=id)
-        return instance
+        return SettingsResponse.model_validate(instance)
     except ValueError as error:
         raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
