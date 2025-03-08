@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
-from repo. database import get_async_session
+from repo.database import get_async_session
 
 from repo.base.service import ModuleService
 from repo.base.schemas import ModuleCreate, ModuleUpdate, ModuleResponse

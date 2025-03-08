@@ -7,6 +7,7 @@ from apps.role_function.router import router as role_function_router
 from apps.functions.router import router as function_router
 from apps.departments.router import router as department_router
 from apps.modules.router import router as module_router
+from apps.modules_company_links.router import router as modules_company_link_router
 from apps.status_dict.router import router as status_dict_router
 from apps.property_code_dict.router import router as property_code_dict_router
 from apps.timezone_dict.router import router as timezone_dict_router
@@ -29,6 +30,7 @@ app.include_router(role_function_router)
 app.include_router(function_router)
 app.include_router(department_router)
 app.include_router(module_router)
+app.include_router(modules_company_link_router)
 app.include_router(status_dict_router)
 app.include_router(property_code_dict_router)
 app.include_router(timezone_dict_router)

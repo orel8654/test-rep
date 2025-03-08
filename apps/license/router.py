@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
-from repo. database import get_async_session
+from repo.database import get_async_session
 
 from repo.companies.service import LicenseService
 from repo.companies.schemas import LicenseCreate, LicenseResponse, LicenseUpdate

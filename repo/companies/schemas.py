@@ -92,6 +92,15 @@ class ModuleCompanyLinkCreate(BaseModel):
     active_to: Optional[date] = Field(None, description="Дата окончания действия")
 
 
+class ModuleCompanyLinkUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    module_id: int = Field(..., description="ID модуля")
+    company_id: int = Field(..., description="ID компании")
+    position: Optional[int] = Field(..., description="Позиция")
+    active_from: Optional[date] = Field(..., description="Дата начала действия")
+    active_to: Optional[date] = Field(None, description="Дата окончания действия")
+
+
 class ModuleCompanyLinkResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID записи")
