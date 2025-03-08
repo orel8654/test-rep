@@ -73,6 +73,14 @@ class UserRoleCreate(BaseModel):
     active_to: Optional[date] = Field(None, description="Дата окончания действия")
 
 
+class UserRoleUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    user_id: int = Field(..., description="ID пользователя")
+    role_id: int = Field(..., description="ID роли")
+    active_from: date = Field(..., description="Дата начала действия")
+    active_to: Optional[date] = Field(None, description="Дата окончания действия")
+
+
 class UserRoleResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID записи")
