@@ -10,6 +10,13 @@ class PropertyCodeDictCreate(BaseModel):
     name: Optional[str] = Field(None, description="Название", max_length=100)
 
 
+class PropertyCodeDictUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    group_code: Optional[str] = Field(..., description="Групповой код", max_length=30)
+    code: Optional[str] = Field(..., description="Код", max_length=30)
+    name: Optional[str] = Field(None, description="Название", max_length=100)
+
+
 class PropertyCodeDictResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID записи")
