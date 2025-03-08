@@ -131,7 +131,14 @@ class UserReportLinkCreate(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     user_id: int = Field(..., description="ID пользователя")
     report_id: int = Field(..., description="ID отчета")
-    created_date: date = Field(..., description="Дата создания")
+    active_from: date = Field(..., description="Дата начала действия")
+    active_to: Optional[date] = Field(None, description="Дата окончания действия")
+
+
+class UserReportLinkUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    user_id: int = Field(..., description="ID пользователя")
+    report_id: int = Field(..., description="ID отчета")
     active_from: date = Field(..., description="Дата начала действия")
     active_to: Optional[date] = Field(None, description="Дата окончания действия")
 

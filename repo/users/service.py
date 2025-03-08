@@ -1,5 +1,5 @@
 from repo.base_service import BaseService
-from repo.models import User, UserGroup, UserSending, UserProperty
+from repo.models import User, UserGroup, UserSending, UserProperty, UserReportLink
 
 
 class UserService(BaseService):
@@ -16,4 +16,8 @@ class UserSendingService(BaseService):
 
 class UserPropertyService(BaseService):
     model = UserProperty
+
+
+class UserReportLinkService(BaseService):
+    model = UserReportLink
 
