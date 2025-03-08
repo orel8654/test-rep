@@ -6,15 +6,22 @@ from repo.users.service import UserService
 from repo.users.schemas import UserCreate, UserUpdate, UserResponse
 
 from apps.auth.service import PasswordService
+from apps.auth.middleware import get_user_access
+
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 router = APIRouter(prefix='/users', tags=['Work with users'])
 
-@router.get('/{id}', response_model=UserResponse)
-async def get_user(id: int, session: AsyncSession = Depends(get_async_session)):
+@router.get('/protect/{id}', response_model=UserResponse)
+async def get_user(id: int, session: AsyncSession = Depends(get_async_session), current_user: str = Depends(get_user_access)):
     """
         Get user
     """
     try:
+        logger.info(f'user request: {current_user}')
         instance = await UserService.get(session=session, id=id)
         return UserResponse.model_validate(instance)
     except ValueError as error:
@@ -29,9 +36,13 @@ async def create_user(payload: UserCreate, session: AsyncSession = Depends(get_a
     """
     try:
         user_data = payload.model_dump()
+        if await UserService.if_username_exists(session=session, username=user_data['username']):
+            raise HTTPException(status_code=409, detail="Username already exists")
         user_data['password'] = PasswordService.get_password_hash(user_data['password'])
         new_settings = await UserService.create(session=session, **user_data)
         return UserResponse.model_validate(new_settings)
+    except HTTPException as http_error:
+        raise http_error
     except Exception as error:
         raise HTTPException(status_code=500, detail=str(error))
 

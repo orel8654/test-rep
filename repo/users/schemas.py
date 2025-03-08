@@ -43,6 +43,16 @@ class UserResponse(BaseModel):
     comment: Optional[str] = Field(None, description="Комментарий", max_length=1000)
 
 
+class UserAuth(BaseModel):
+    username: str = Field(..., description="Имя пользователя", max_length=60)
+    password: str = Field(..., description="User password", min_length=8)
+
+
+class UserAuthResponse(BaseModel):
+    token: str = Field(..., description="Токен авторизации")
+    token_type: str = Field(..., description="Тип токена")
+
+
 class UserGroupCreate(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     company_id: int = Field(..., description="ID компании")
