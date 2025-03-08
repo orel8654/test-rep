@@ -13,7 +13,7 @@ class User(Base):
     firstname: Mapped[str] = mapped_column(String(60), nullable=False)
     lastname: Mapped[str] = mapped_column(String(60), nullable=False)
     patronymic: Mapped[Optional[str]] = mapped_column(String(60), nullable=True)
-    created_date: Mapped[date] = mapped_column(nullable=False, server_default=func.now())
+    created_date: Mapped[date] = mapped_column(nullable=False, default=date.today)
     user_lock: Mapped[bool] = mapped_column(default=False, server_default=text("false"))
     password: Mapped[str] = mapped_column(String(255), nullable=False)
     comment: Mapped[Optional[str]] = mapped_column(String(1000), nullable=True)

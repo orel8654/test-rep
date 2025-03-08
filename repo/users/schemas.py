@@ -16,6 +16,18 @@ class UserCreate(BaseModel):
     comment: Optional[str] = Field(None, description="Комментарий", max_length=1000)
 
 
+class UserUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    username: Optional[str] = Field(..., description="Username", max_length=60)
+    firstname: Optional[str] = Field(..., description="First name", max_length=60)
+    lastname: Optional[str] = Field(..., description="Last name", max_length=60)
+    patronymic: Optional[str] = Field(None, description="Patronymic", max_length=60)
+    company_id: int = Field(..., description="Company ID")
+    group_id: int = Field(..., description="Group ID")
+    timezone_id: int = Field(..., description="Timezone ID")
+    comment: Optional[str] = Field(None, description="Комментарий", max_length=1000)
+
+
 class UserResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID пользователя")
