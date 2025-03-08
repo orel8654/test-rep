@@ -89,6 +89,13 @@ class UserPropertyCreate(BaseModel):
     value: Optional[str] = Field(None, description="Значение свойства", max_length=255)
 
 
+class UserPropertyUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    user_id: int = Field(..., description="ID пользователя")
+    property_code_id: int = Field(..., description="ID кода свойства")
+    value: Optional[str] = Field(None, description="Значение свойства", max_length=255)
+
+
 class UserPropertyResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     id: int = Field(..., description="ID записи")
