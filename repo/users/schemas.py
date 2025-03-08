@@ -101,7 +101,13 @@ class UserSendingCreate(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
     user_id: int = Field(..., description="ID пользователя")
     status_id: int = Field(..., description="ID статуса")
-    created_date: date = Field(..., description="Дата создания")
+    message: str = Field(..., description="Сообщение", max_length=4000)
+
+
+class UserSendingUpdate(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    user_id: int = Field(..., description="ID пользователя")
+    status_id: int = Field(..., description="ID статуса")
     message: str = Field(..., description="Сообщение", max_length=4000)
 
 

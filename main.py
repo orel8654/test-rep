@@ -16,6 +16,7 @@ from apps.license.router import router as license_router
 from apps.company_properties.router import router as company_property_router
 from apps.users.router import router as user_router
 from apps.user_groups.router import router as user_groups_router
+from apps.user_sendings.router import router as user_sendings_router
 
 app = FastAPI()
 
@@ -41,3 +42,4 @@ app.include_router(license_router)
 app.include_router(company_property_router)
 app.include_router(user_router)
 app.include_router(user_groups_router)
+app.include_router(user_sendings_router)

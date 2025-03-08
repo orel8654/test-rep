@@ -69,7 +69,7 @@ class UserProperty(Base):
 class UserSending(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     status_id: Mapped[int] = mapped_column(ForeignKey("status_dict.id"), nullable=False)
-    created_date: Mapped[date] = mapped_column(nullable=False, server_default=func.now())
+    created_date: Mapped[date] = mapped_column(nullable=False, default=date.today)
     message: Mapped[str] = mapped_column(String(4000), nullable=False)
 
     user: Mapped["User"] = relationship("User", back_populates="sendings")
@@ -83,7 +83,7 @@ class UserSending(Base):
 class UserReportLink(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     report_id: Mapped[int] = mapped_column(ForeignKey("reports.id"), nullable=False)
-    created_date: Mapped[date] = mapped_column(nullable=False, server_default=func.now())
+    created_date: Mapped[date] = mapped_column(nullable=False, default=date.today)
     active_from: Mapped[date] = mapped_column(nullable=False)
     active_to: Mapped[Optional[date]] = mapped_column(nullable=True)
 
