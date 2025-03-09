@@ -8,7 +8,7 @@ from repo.users.schemas import UserAuth, UserAuthResponse
 from apps.auth.service import PasswordService, AuthService
 
 
-router = APIRouter(prefix='/auth', tags=['auth'])
+router = APIRouter(prefix='/auth', tags=['Auth'])
 
 @router.post('/login', response_model=UserAuthResponse)
 async def login(payload: UserAuth, session: AsyncSession = Depends(get_async_session)):
