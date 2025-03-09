@@ -24,10 +24,6 @@ from apps.user_roles.router import router as user_roles_router
 
 app = FastAPI()
 
-@app.get('/')
-async def root():
-    return {'message': 'App is running'}
-
 app.include_router(auth_router)
 app.include_router(settings_router)
 app.include_router(settings_dict_router)
