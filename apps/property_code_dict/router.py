@@ -1,9 +1,11 @@
-from fastapi import APIRouter, HTTPException, Depends, Response
+from fastapi import APIRouter, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from repo.database import get_async_session
 
 from repo.base.service import PropertyCodeDictService
 from repo.base.schemas import PropertyCodeDictCreate, PropertyCodeDictUpdate, PropertyCodeDictResponse
+
+from service.exceptions import handle_db_exceptions
 
 
 router = APIRouter(prefix="/propertycode/dict", tags=["Property code dict"])
@@ -17,10 +19,8 @@ async def get_property_code_dict(id: int, session: AsyncSession = Depends(get_as
     try:
         instance = await PropertyCodeDictService.get(session=session, id=id)
         return PropertyCodeDictResponse.model_validate(instance)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
 
 @router.post('/create', response_model=PropertyCodeDictResponse)
 async def create_property_code_dict(payload: PropertyCodeDictCreate, session: AsyncSession = Depends(get_async_session)):
@@ -30,10 +30,8 @@ async def create_property_code_dict(payload: PropertyCodeDictCreate, session: As
     try:
         new_instance = await PropertyCodeDictService.create(session=session, **payload.model_dump())
         return PropertyCodeDictResponse.model_validate(new_instance)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
 
 @router.put('/update/{id}', response_model=PropertyCodeDictResponse)
 async def update_property_code_dict(id: int, payload: PropertyCodeDictUpdate, session: AsyncSession = Depends(get_async_session)):
@@ -43,10 +41,8 @@ async def update_property_code_dict(id: int, payload: PropertyCodeDictUpdate, se
     try:
         new_instance = await PropertyCodeDictService.update(session=session, id=id, **payload.model_dump())
         return PropertyCodeDictResponse.model_validate(new_instance)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
 
 @router.delete('/delete/{id}')
 async def delete_property_code_dict(id: int, session: AsyncSession = Depends(get_async_session)):
@@ -56,7 +52,5 @@ async def delete_property_code_dict(id: int, session: AsyncSession = Depends(get
     try:
         await PropertyCodeDictService.delete(session=session, id=id)
         return Response(status_code=204)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)

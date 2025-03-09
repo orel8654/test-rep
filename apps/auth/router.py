@@ -7,6 +7,7 @@ from repo.users.schemas import UserAuth, UserAuthResponse
 
 from apps.auth.service import PasswordService, AuthService
 
+from service.exceptions import handle_db_exceptions
 
 router = APIRouter(prefix='/auth', tags=['Auth'])
 
@@ -29,7 +30,5 @@ async def login(payload: UserAuth, session: AsyncSession = Depends(get_async_ses
             )
         access_token = AuthService.create_access_token(data={"sub": user.username})
         return UserAuthResponse(token=access_token, token_type='bearer')
-    except HTTPException as http_error:
-        raise http_error
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)

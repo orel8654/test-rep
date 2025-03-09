@@ -1,9 +1,11 @@
-from fastapi import APIRouter, HTTPException, Depends, Response
+from fastapi import APIRouter, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from repo.database import get_async_session
 
 from repo.base.service import ReportService
 from repo.base.schemas import ReportResponse, ReportCreate, ReportUpdate
+
+from service.exceptions import handle_db_exceptions
 
 router = APIRouter(prefix='/report', tags=['Reports'])
 
@@ -15,10 +17,8 @@ async def get_report(id: int, session: AsyncSession = Depends(get_async_session)
     try:
         instance = await ReportService.get(session=session, id=id)
         return ReportResponse.model_validate(instance)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
 
 @router.post('/create', response_model=ReportResponse)
 async def create_report(payload: ReportCreate, session: AsyncSession = Depends(get_async_session)):
@@ -28,10 +28,8 @@ async def create_report(payload: ReportCreate, session: AsyncSession = Depends(g
     try:
         new_instance = await ReportService.create(session=session, **payload.model_dump())
         return ReportResponse.model_validate(new_instance)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
 
 @router.put('/update/{id}', response_model=ReportResponse)
 async def update_report(id: int, payload: ReportUpdate, session: AsyncSession = Depends(get_async_session)):
@@ -41,10 +39,8 @@ async def update_report(id: int, payload: ReportUpdate, session: AsyncSession = 
     try:
         new_instance = await ReportService.update(session=session, id=id, **payload.model_dump())
         return ReportResponse.model_validate(new_instance)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
 
 @router.delete('/delete/{id}')
 async def delete_report(id: int, session: AsyncSession = Depends(get_async_session)):
@@ -54,7 +50,5 @@ async def delete_report(id: int, session: AsyncSession = Depends(get_async_sessi
     try:
         await ReportService.delete(session=session, id=id)
         return Response(status_code=204)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)

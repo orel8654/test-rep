@@ -1,9 +1,11 @@
-from fastapi import APIRouter, HTTPException, Depends, Response
+from fastapi import APIRouter, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from repo.database import get_async_session
 
 from repo.base.service import RoleFunctionsService
 from repo.base.schemas import RoleFunctionResponse, RoleFunctionUpdate, RoleFunctionCreate
+
+from service.exceptions import handle_db_exceptions
 
 
 router = APIRouter(prefix='/role/function', tags=['Roles dict'])
@@ -17,10 +19,8 @@ async def get_role_function(id: int, session: AsyncSession = Depends(get_async_s
     try:
         instance = await RoleFunctionsService.get(session=session, id=id)
         return RoleFunctionResponse.model_validate(instance)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
 
 @router.post('/create', response_model=RoleFunctionResponse)
 async def create_role_function(payload: RoleFunctionCreate, session: AsyncSession = Depends(get_async_session)):
@@ -30,10 +30,8 @@ async def create_role_function(payload: RoleFunctionCreate, session: AsyncSessio
     try:
         new_instance = await RoleFunctionsService.create(session=session, **payload.model_dump())
         return RoleFunctionResponse.model_validate(new_instance)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
 
 @router.put('/update/{id}', response_model=RoleFunctionResponse)
 async def update_role_function(id: int, payload: RoleFunctionUpdate, session: AsyncSession = Depends(get_async_session)):
@@ -43,10 +41,8 @@ async def update_role_function(id: int, payload: RoleFunctionUpdate, session: As
     try:
         new_instance = await RoleFunctionsService.update(session=session, id=id, **payload.model_dump())
         return RoleFunctionResponse.model_validate(new_instance)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
 
 @router.delete('/delete/{id}')
 async def delete_role_function(id: int, session: AsyncSession = Depends(get_async_session)):
@@ -56,7 +52,5 @@ async def delete_role_function(id: int, session: AsyncSession = Depends(get_asyn
     try:
         await RoleFunctionsService.delete(session=session, id=id)
         return Response(status_code=204)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)

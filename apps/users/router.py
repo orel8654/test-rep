@@ -8,6 +8,8 @@ from repo.users.schemas import UserCreate, UserUpdate, UserResponse
 from apps.auth.service import PasswordService
 from apps.auth.middleware import get_user_access
 
+from service.exceptions import handle_db_exceptions
+
 import logging
 
 logger = logging.getLogger(__name__)
@@ -24,10 +26,8 @@ async def get_user(id: int, session: AsyncSession = Depends(get_async_session), 
         logger.info(f'user request: {current_user}')
         instance = await UserService.get(session=session, id=id)
         return UserResponse.model_validate(instance)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
 
 @router.post('/create', response_model=UserResponse)
 async def create_user(payload: UserCreate, session: AsyncSession = Depends(get_async_session)):
@@ -41,10 +41,8 @@ async def create_user(payload: UserCreate, session: AsyncSession = Depends(get_a
         user_data['password'] = PasswordService.get_password_hash(user_data['password'])
         new_settings = await UserService.create(session=session, **user_data)
         return UserResponse.model_validate(new_settings)
-    except HTTPException as http_error:
-        raise http_error
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
 
 
 @router.put('/update/{id}', response_model=UserResponse)
@@ -55,10 +53,8 @@ async def update_user(id: int, payload: UserUpdate, session: AsyncSession = Depe
     try:
         new_instance = await UserService.update(session=session, id=id, **payload.model_dump())
         return UserResponse.model_validate(new_instance)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
 
 @router.delete('/delete/{id}')
 async def delete_user(id: int, session: AsyncSession = Depends(get_async_session)):
@@ -68,7 +64,5 @@ async def delete_user(id: int, session: AsyncSession = Depends(get_async_session
     try:
         await UserService.delete(session=session, id=id)
         return Response(status_code=204)
-    except ValueError as error:
-        raise HTTPException(status_code=404, detail=str(error))
     except Exception as error:
-        raise HTTPException(status_code=500, detail=str(error))
+        handle_db_exceptions(error)
