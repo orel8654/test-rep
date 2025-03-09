@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.base.service import FunctionDictService
 from repo.base.schemas import FunctionDictResponse, FunctionDictCreate, FunctionDictUpdate
 
-router = APIRouter(prefix='/functions', tags=['Work with functions'])
+router = APIRouter(prefix='/functions', tags=['Functions'])
 
 
 @router.get('/{id}', response_model=FunctionDictResponse)

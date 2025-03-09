@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.base.service import SettingsService
 from repo.base.schemas import SettingsResponse, SettingsCreate, SettingsUpdate
 
-router = APIRouter(prefix='/settings', tags=['Work with settings'])
+router = APIRouter(prefix='/settings', tags=['Settings'])
 
 @router.get('/{id}', response_model=SettingsResponse)
 async def get_settings(id: int, session: AsyncSession = Depends(get_async_session)):

@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.companies.service import LicenseService
 from repo.companies.schemas import LicenseCreate, LicenseResponse, LicenseUpdate
 
-router = APIRouter(prefix='/license', tags=['Work with licenses'])
+router = APIRouter(prefix='/license', tags=['License'])
 
 
 @router.get('/{id}', response_model=LicenseResponse)

@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.users.service import UserGroupsService
 from repo.users.schemas import UserGroupResponse, UserGroupUpdate, UserGroupCreate
 
-router = APIRouter(prefix="/users/group", tags=["Work with users group"])
+router = APIRouter(prefix="/users/group", tags=["Users group"])
 
 
 @router.get('/{id}', response_model=UserGroupResponse)

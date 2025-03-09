@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.base.service import TimezoneDictService
 from repo.base.schemas import TimezoneDictCreate, TimezoneDictUpdate, TimezoneDictResponse
 
-router = APIRouter(prefix='/timezone/dict', tags=['Work with timezone dict'])
+router = APIRouter(prefix='/timezone/dict', tags=['Timezone dict'])
 
 @router.get('/{id}', response_model=TimezoneDictResponse)
 async def get_timezone_dict(id: int, session: AsyncSession = Depends(get_async_session)):

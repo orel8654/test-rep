@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.users.service import UserPropertyService
 from repo.users.schemas import UserPropertyResponse, UserPropertyUpdate, UserPropertyCreate
 
-router = APIRouter(prefix='/users/property', tags=['Work with users property'])
+router = APIRouter(prefix='/users/property', tags=['Users property'])
 
 
 @router.get('/{id}', response_model=UserPropertyResponse)

@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.companies.service import ModuleCompanyLinkService
 from repo.companies.schemas import ModuleCompanyLinkResponse, ModuleCompanyLinkCreate, ModuleCompanyLinkUpdate
 
-router = APIRouter(prefix='/modules/company/links', tags=['Work with modules comapny links'])
+router = APIRouter(prefix='/modules/company/links', tags=['Module company links'])
 
 
 @router.get('/{id}', response_model=ModuleCompanyLinkResponse)

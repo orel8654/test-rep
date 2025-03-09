@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.users.service import UserRoleService
 from repo.users.schemas import UserRoleResponse, UserRoleUpdate, UserRoleCreate
 
-router = APIRouter(prefix='/users/roles', tags=['Work with users roles'])
+router = APIRouter(prefix='/users/roles', tags=['Users roles'])
 
 @router.get('/{id}', response_model=UserRoleResponse)
 async def get_user_roles(id: int, session: AsyncSession = Depends(get_async_session)):

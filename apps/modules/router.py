@@ -6,7 +6,7 @@ from repo.base.service import ModuleService
 from repo.base.schemas import ModuleCreate, ModuleUpdate, ModuleResponse
 
 
-router = APIRouter(prefix="/module", tags=["Work with module"])
+router = APIRouter(prefix="/module", tags=["Module"])
 
 
 @router.get('/{id}', response_model=ModuleResponse)

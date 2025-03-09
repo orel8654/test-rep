@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.users.service import UserSendingService
 from repo.users.schemas import UserSendingResponse, UserSendingUpdate, UserSendingCreate
 
-router = APIRouter(prefix='/users/sending', tags=['Work with user sending'])
+router = APIRouter(prefix='/users/sending', tags=['Users sending'])
 
 
 @router.get('/{id}', response_model=UserSendingResponse)

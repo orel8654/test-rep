@@ -6,7 +6,7 @@ from repo.companies.service import DepartmentService
 from repo.companies.schemas import DepartmentResponse, DepartmentCreate, DepartmentUpdate
 
 
-router = APIRouter(prefix="/departments", tags=["Work with departments"])
+router = APIRouter(prefix="/departments", tags=["Departments"])
 
 
 @router.get('/{id}', response_model=DepartmentResponse)

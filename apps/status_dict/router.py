@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.base.service import StatusDictService
 from repo.base.schemas import StatusDictCreate, StatusDictUpdate, StatusDictResponse
 
-router = APIRouter(prefix="/status/dict", tags=["Work with status dict"])
+router = APIRouter(prefix="/status/dict", tags=["Status dict"])
 
 
 @router.get('/{id}', response_model=StatusDictResponse)

@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.base.service import ReportService
 from repo.base.schemas import ReportResponse, ReportCreate, ReportUpdate
 
-router = APIRouter(prefix='/report', tags=['Work with report'])
+router = APIRouter(prefix='/report', tags=['Reports'])
 
 @router.get('/{id}', response_model=ReportResponse)
 async def get_report(id: int, session: AsyncSession = Depends(get_async_session)):

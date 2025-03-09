@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.companies.service import CompanyService
 from repo.companies.schemas import CompanyResponse, CompanyCreate, CompanyUpdate
 
-router = APIRouter(prefix='/companies', tags=['Work with companies'])
+router = APIRouter(prefix='/companies', tags=['Company'])
 
 @router.get('/{id}', response_model=CompanyResponse)
 async def get_company(id: int, session: AsyncSession = Depends(get_async_session)):

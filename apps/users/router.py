@@ -13,7 +13,7 @@ import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-router = APIRouter(prefix='/users', tags=['Work with users'])
+router = APIRouter(prefix='/users', tags=['Users'])
 
 @router.get('/protect/{id}', response_model=UserResponse)
 async def get_user(id: int, session: AsyncSession = Depends(get_async_session), current_user: str = Depends(get_user_access)):

@@ -6,7 +6,7 @@ from repo.base.service import PropertyCodeDictService
 from repo.base.schemas import PropertyCodeDictCreate, PropertyCodeDictUpdate, PropertyCodeDictResponse
 
 
-router = APIRouter(prefix="/propertycode/dict", tags=["Work with property code dict"])
+router = APIRouter(prefix="/propertycode/dict", tags=["Property code dict"])
 
 
 @router.get('/{id}', response_model=PropertyCodeDictResponse)

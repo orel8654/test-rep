@@ -6,7 +6,7 @@ from repo.base.service import RoleService
 from repo.base.schemas import RoleDictResponse, RoleDictCreate, RoleDictUpdate
 
 
-router = APIRouter(prefix='/role', tags=['Work with role functions'])
+router = APIRouter(prefix='/role', tags=['Roles'])
 
 
 @router.get('/{id}', response_model=RoleDictResponse)

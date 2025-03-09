@@ -6,7 +6,7 @@ from repo.base.service import SettingsDictService
 from repo.base.schemas import SettingsDictResponse, SettingsDictCreate, SettingsDictUpdate
 
 
-router = APIRouter(prefix='/settings/dict', tags=['Work with settings dict'])
+router = APIRouter(prefix='/settings/dict', tags=['Settings dict'])
 
 
 @router.get('/{id}', response_model=SettingsDictResponse)

@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.users.service import UserReportLinkService
 from repo.users.schemas import UserReportLinkResponse, UserReportLinkCreate, UserReportLinkUpdate
 
-router = APIRouter(prefix='/users/report/link', tags=['Work with users report link'])
+router = APIRouter(prefix='/users/report/link', tags=['Users report link'])
 
 @router.get('/{id}', response_model=UserReportLinkResponse)
 async def get_user_report_link(id: int, session: AsyncSession = Depends(get_async_session)):

@@ -5,7 +5,7 @@ from repo.database import get_async_session
 from repo.companies.service import CompanyPropertiesService
 from repo.base.schemas import CompanyPropertyCreate, CompanyPropertyUpdate, CompanyPropertyResponse
 
-router = APIRouter(prefix='/comapny/property', tags=['Work with comapny property'])
+router = APIRouter(prefix='/comapny/property', tags=['Company property'])
 
 
 @router.get('/{id}', response_model=CompanyPropertyResponse)
