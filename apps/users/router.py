@@ -17,7 +17,7 @@ logger.setLevel(logging.INFO)
 
 router = APIRouter(prefix='/users', tags=['Users'])
 
-@router.get('/protect/{id}', response_model=UserResponse)
+@router.get('/{id}', response_model=UserResponse)
 async def get_user(id: int, session: AsyncSession = Depends(get_async_session), current_user: str = Depends(get_user_access)):
     """
         Get user
@@ -26,6 +26,18 @@ async def get_user(id: int, session: AsyncSession = Depends(get_async_session), 
         logger.info(f'user request: {current_user}')
         instance = await UserService.get(session=session, id=id)
         return UserResponse.model_validate(instance)
+    except Exception as error:
+        handle_db_exceptions(error)
+
+@router.get('/get/all', response_model=list[UserResponse])
+async def get_all_users(session: AsyncSession = Depends(get_async_session), current_user: str = Depends(get_user_access)):
+    """
+        Get all users
+    """
+    try:
+        logger.info(f'user request: {current_user}')
+        users = await UserService.get_all(session=session)
+        return users
     except Exception as error:
         handle_db_exceptions(error)
 
@@ -46,22 +58,24 @@ async def create_user(payload: UserCreate, session: AsyncSession = Depends(get_a
 
 
 @router.put('/update/{id}', response_model=UserResponse)
-async def update_user(id: int, payload: UserUpdate, session: AsyncSession = Depends(get_async_session)):
+async def update_user(id: int, payload: UserUpdate, session: AsyncSession = Depends(get_async_session), current_user: str = Depends(get_user_access)):
     """
         Update user
     """
     try:
+        logger.info(f'user request: {current_user}')
         new_instance = await UserService.update(session=session, id=id, **payload.model_dump())
         return UserResponse.model_validate(new_instance)
     except Exception as error:
         handle_db_exceptions(error)
 
 @router.delete('/delete/{id}')
-async def delete_user(id: int, session: AsyncSession = Depends(get_async_session)):
+async def delete_user(id: int, session: AsyncSession = Depends(get_async_session), current_user: str = Depends(get_user_access)):
     """
         Delete user
     """
     try:
+        logger.info(f'user request: {current_user}')
         await UserService.delete(session=session, id=id)
         return Response(status_code=204)
     except Exception as error:

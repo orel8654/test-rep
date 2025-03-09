@@ -22,6 +22,13 @@ class UserService(BaseService):
         instance = result.scalar_one_or_none()
         return instance
 
+    @classmethod
+    async def get_all(cls, session: AsyncSession) -> list[User]:
+        query = select(cls.model)
+        result = await session.execute(query)
+        users = result.scalars().all()
+        return list(users)
+
 
 class UserGroupsService(BaseService):
     model = UserGroup
