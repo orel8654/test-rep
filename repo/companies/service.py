@@ -18,6 +18,8 @@ class CompanyService(BaseService):
         query = select(cls.model).options(joinedload(cls.model.users)).where(cls.model.id == id)
         result = await session.execute(query)
         instance = result.scalars().first()
+        if instance is None:
+            raise ValueError(f"{cls.model.__name__} with id={id} not found")
         return instance
 
 
