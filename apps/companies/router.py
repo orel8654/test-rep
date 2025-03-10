@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from repo.database import get_async_session
 
 from repo.companies.service import CompanyService
-from repo.companies.schemas import CompanyResponse, CompanyCreate, CompanyUpdate
+from repo.companies.schemas import CompanyResponse, CompanyCreate, CompanyUpdate, CompanyFullyResponse
 
 from service.exceptions import handle_db_exceptions
 
@@ -17,6 +17,17 @@ async def get_company(id: int, session: AsyncSession = Depends(get_async_session
     try:
         instance = await CompanyService.get(session=session, id=id)
         return CompanyResponse.model_validate(instance)
+    except Exception as error:
+        handle_db_exceptions(error)
+
+@router.get('/{id}/fully', response_model=CompanyFullyResponse)
+async def get_company_fully(id: int, session: AsyncSession = Depends(get_async_session)):
+    """
+        Get a company with users
+    """
+    try:
+        instance = await CompanyService.get_company_with_users(session=session, id=id)
+        return CompanyFullyResponse.model_validate(instance)
     except Exception as error:
         handle_db_exceptions(error)
 

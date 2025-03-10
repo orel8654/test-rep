@@ -2,6 +2,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional
 from datetime import date
 
+from repo.users.schemas import UserResponse
 
 class CompanyCreate(BaseModel):
     model_config = ConfigDict(from_attributes=True, use_enum_values=False)
@@ -33,6 +34,19 @@ class CompanyResponse(BaseModel):
     kpp: str = Field(..., description="КПП компании", min_length=9, max_length=9)
     ogrn: Optional[str] = Field(None, description="ОГРН компании", max_length=13)
     bic: Optional[str] = Field(None, description="БИК компании", max_length=9)
+
+
+class CompanyFullyResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True, use_enum_values=False)
+    id: int = Field(..., description="ID компании")
+    property_id: int = Field(..., description="ID свойства компании")
+    name: str = Field(..., description="Название компании", max_length=255)
+    created_date: date = Field(..., description="Дата создания")
+    inn: str = Field(..., description="ИНН компании", min_length=10, max_length=16)
+    kpp: str = Field(..., description="КПП компании", min_length=9, max_length=9)
+    ogrn: Optional[str] = Field(None, description="ОГРН компании", max_length=13)
+    bic: Optional[str] = Field(None, description="БИК компании", max_length=9)
+    users: Optional[list[UserResponse]] = Field(None, description="Сотрудники")
 
 
 class LicenseCreate(BaseModel):
